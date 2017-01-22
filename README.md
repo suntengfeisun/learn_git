@@ -1,63 +1,87 @@
-#初级知识
+Title         : How to use Git
+Author        : suntengfei
+Logo          : True
 
-###一.客户端(本地电脑)安装git
-1.windows 安装git.exe 和TortoiseGit(图形化GUI界面)<br><br>
-2.linux安装git<br><br>
-###二.使用git
+#### 本教程为速成教程,如需要更深入的学习,请出门左拐
+在浏览教程之前我们先看一下git版本管理的流程示意"图"<br><br>
+本地文件--->暂存区--->本地版本库(某分支)--->远程版本库(某分支)<br><br>
+以下所有版本库地址都以git@aaa.bbb:ccc.git为例<br><br>
+# 初级教程<br><br>
+## 我有一个现成的版本库地址我可以进行读写,我该如何将代码拉取远程代码到本地?<br>
+答:
+```java
+  git clone git@aaa.bbb:ccc.git //将在本地新建一个ccc的文件夹,可以理解为于仓库,其实为本地文件
+```
+<br>
+## 我已经获取到了远程的代码,经过修改,我想把我的代码改动提交的远程的版本库,我应该怎么操作呢?
+答:
+```java
+  git diff //对比一下我的"本地文件"和"暂存区"的文件
+  git add . //提交"本地文件"到暂存区
+  git diff -cached //对比暂存区和本地版本库的区别
+  git commit -m commit_info //提交暂存区文件到本地版本库
+  git push origin master //提交本地版本库到远程版本库
+```
+<br>
+# 中级教程<br><br>
+## master分支是什么?我如何创建以及切换一个分支?<br><br>
+答:<br>
+一个仓库可以有多个分支,无论是本地还是远程
 
-1.克隆远程(git版本库都有一个默认为master的分支,如下全部是对master分支的操作,关于分支的操作将在中级知识中介绍)<br><br>
-  a.项目开始时已知仓库地址<br><br>
-git clone git@xxxx:hello_world.git //将hello_world版本库中名为master分支的数据"克隆"到本地仓库<br><br>
-b.项目开始时未知仓库地址<br><br>
-git init //初始化一个本地仓库<br><br>
-git remote add origin git@xxxx:hello_world.git  // 将远程仓库地址"关联"到本地仓库(origin 为远程仓库名,不建议修改)<br><br>
-git规定如果两个项目有历史记录是不允许直接pull或者merge的需要加"--allow-unrelated-histories"<br><br>
-确保无冲突的远程仓库<br><br>
-直接使用git pull origin master将代码拉下来<br><br>
-如果担心有冲突 可以如下:<br><br>
-git pull origin master:temp//将master分支拉到一个临时分支<br><br>
-git diff temp //比较分支不同<br><br>
-git merge temp //合并分支<br><br>
-git branch -d temp //删除多余分支<br><br>
-2.提交文件/修改到远程仓库<br><br>
-当我们完成代码,或者任何想保存代码的时候,我们将代码提交到远程仓库,步骤如下<br><br>
-git add . //将所有文件添加到本地缓存区<br><br>
-git commit //这时将启动一个vim,将文件wq保存后的内容为commit的说明(小技巧:使用git commit -m "comment_introduction")<br><br>
-git push origin master //只有一个分支时,可省略为"git push"<br><br>
-注意:在多人协作是一定要通过git pull 先拉取远程代码到本地,再做修改,防止冲突的发生.如何解决已经发生的冲突,另开一篇.<br><br>
-注意:更多理论认为git pull 操作是不安全的,pull=fetch+merge会merge代码,安全的做法是fetch到新分支,diff分支之后在主动merge<br><br>
-#中级知识
-###一.git分支相关操作:
-1.克隆时不想克隆master默认分支:想克隆名为one的分支<br><br>
-git clone -b one git@xxxx:hello_world.git //将hello_world版本库中名为one分支的数据"克隆"到本地<br><br>
-2.已经克隆了master分支,远程已知存在one分支,想切换到one分支<br><br>
-git checkout one //切换到one分支.一定注意本地原分支代码安全<br><br>
-3.想把现有分支推送到远程新分支two:<br><br>
-git push origin master : two //本地分支名:远程新分支名<br><br>
-4.想在远程版本库新增一个为空的新分支two:<br><br>
-git branch "two" //创建一个名为two的本地分支<br><br>
-git checkout "two"  //将本地代码切换到本地名为two的分支(切换分支一定注意,本地原分		支代码将被删除)<br><br>
-以上两句可以使用一句git checkout -b two代替<br><br>
-git push origin two //推送到为two分支(省略:two,建议本地和远程分支名相同)<br><br>
+```java
+  git branch newbranch //在本地创建一个新分支
+  git checkout newbranch //将本地指向新分支
+```
+简而言之
+```java
+  git checkout -b newbranch //创建并切换到新分支newbranch
+```
+创建并切换到新分支之后
+```java
+  git commit -am commit_info //简写了add & commit
+  git push origin newbranch //从本地版本库推送到远程版本库 
+```
+# 高级教程
+## 我已经新建了一个空文件夹,我如何"绑定"远程仓库?
+答:
+```java
+  git init //创建一个本地版本库
+  git remote add origin git@git.yhouse.com:test.git //将远程版本库与本地"关联"
+  git pull origin master //将远程版本库的内容拉下来(注意这里是同时fetch到了本地版本库和merge到了本地文件)
+```
+## 我本地有一些代码没及时关联远程版本库,我又不想clone了复制过去,一定有更简洁的方法吧?
+答:<br>
+我们直接按照上面的方式不就行了?但是,如果本地文件和远程文件有文件冲突了那该怎么办?问题是我不知道如何应对啊?<br>
+下面就是应对方法
+```java
+  git init //在本地创建一个版本库
+  git remote add origin git@git.yhouse.com:test.git //将远程版本库与本地"关联"
+  git fetch origin master:temp //将远程版本库内容拉到新本地分支temp里面
+  git diff temp 将本地文件与本地仓库新分支temp做比较
+  //处理冲突或者完全没有冲突
+  git merge temp //合并内容到本地
+```
+## 我想看一下我的提交历史?
+答:
+```java
+  git log //查看全部提交历史comment_introduction信息
+  git log -n //查看最近n次提交历史comment_introduction信息
+  git log -p //查看提交历史comment_introduction信息以及文件更改详情
+  git log --stat //-p是详情,这个没有详情,只有更改的行数git log //查看全部提交历史comment_introduction信息
+```
 
-#高级知识
-###一.其他常用知识:
-1.查看文件的不同<br><br>
-git status //总览文件变化<br><br>
-git diff //查看本地文件的对比<br><br>
-git diff --cached //查看缓存区和本地仓库的对比,貌似与--staged意义相同<br><br>
-2.查看提交历史相关操作<br><br>
-git log //查看全部提交历史comment_introduction信息<br><br>
-git log -n //查看最近n次提交历史comment_introduction信息<br><br>
-git log -p //查看提交历史comment_introduction信息以及文件更改详情<br><br>
-git log --stat //-p是详情,这个没有详情,只有更改的行数<br><br>
-3.版本回退<br><br>
-一言难尽详见:<a href = "http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013744142037508cf42e51debf49668810645e02887691000">廖雪峰的git教程</a><br><br>
-4.其他:<br><br>
-git remote -v //查看远程版本库地址<br><br>
-git branch -a //查看所有分支<br><br>
-
-
-
-
-
+## 我这次修改的错误了,我应该如何回退到上一个版本?
+答:
+```java
+  git reset --hard HEAD^ //退回到上一个版本
+```
+## 学会了退回上一个版本,那么其他任意版本呢?
+```java
+  git reset --hard commit_id //退回到任意版本
+```
+## 还有什么其他有用的命令?
+答:
+```java
+  git remote -v //查看远程版本库地址
+  git branch -a //查看所有分支git remote -v //查看远程版本库地址
+```
