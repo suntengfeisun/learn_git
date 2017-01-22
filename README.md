@@ -64,10 +64,10 @@ Logo          : True
 ## 我想看一下我的提交历史?
 答:
 ```java
-  git log //查看全部提交历史comment_introduction信息
-  git log -n //查看最近n次提交历史comment_introduction信息
-  git log -p //查看提交历史comment_introduction信息以及文件更改详情
-  git log --stat //-p是详情,这个没有详情,只有更改的行数git log //查看全部提交历史comment_introduction信息
+  git log //查看全部提交历史commit_info信息
+  git log -n //查看最近n次提交历史commit_info信息
+  git log -p //查看提交历史commit_info信息以及文件更改详情
+  git log --stat //-p是详情,这个没有详情,只有更改的行数git log //查看全部提交历史commit_info信息
 ```
 
 ## 我这次修改的错误了,我应该如何回退到上一个版本?
