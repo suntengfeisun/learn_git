@@ -11,14 +11,21 @@ git clone git@xxxx:hello_world.git //将hello_world版本库中名为master分�
 b.项目开始时未知仓库地址<br><br>
 git init //初始化一个本地仓库<br><br>
 git remote add origin git@xxxx:hello_world.git  // 将远程仓库地址"关联"到本地仓库(origin 为远程仓库名,不建议修改)<br><br>
+git规定如果两个项目有历史记录是不允许直接pull或者merge的需要加"--allow-unrelated-histories"<br><br>
+确保无冲突的远程仓库<br><br>
+直接使用git pull origin master将代码拉下来<br><br>
+如果担心有冲突 可以如下:<br><br>
+git pull origin master:temp//将master分支拉到一个临时分支<br><br>
+git diff temp //比较分支不同<br><br>
+git merge temp //合并分支<br><br>
+git branch -d temp //删除多余分支<br><br>
 2.提交文件/修改到远程仓库<br><br>
 当我们完成代码,或者任何想保存代码的时候,我们将代码提交到远程仓库,步骤如下<br><br>
 git add . //将所有文件添加到本地缓存区<br><br>
 git commit //这时将启动一个vim,将文件wq保存后的内容为commit的说明(小技巧:使用git commit -m "comment_introduction")<br><br>
 git push origin master //只有一个分支时,可省略为"git push"<br><br>
 注意:在多人协作是一定要通过git pull 先拉取远程代码到本地,再做修改,防止冲突的发生.如何解决已经发生的冲突,另开一篇.<br><br>
-
-
+注意:更多理论认为git pull 操作是不安全的,pull=fetch+merge会merge代码,安全的做法是fetch到新分支,diff分支之后在主动merge<br><br>
 #中级知识
 ###一.git分支相关操作:
 1.克隆时不想克隆master默认分支:想克隆名为one的分支<br><br>
