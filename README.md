@@ -83,5 +83,5 @@ Logo          : True
 答:
 ```java
   git remote -v //查看远程版本库地址
-  git branch -a //查看所有分支git remote -v //查看远程版本库地址
+  git branch -a //查看所有分支
 ```
