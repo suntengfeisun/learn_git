@@ -1,7 +1,5 @@
-Title         : How to use Git
-Author        : suntengfei
-Logo          : True
-
+# GIT简明速成教程
+<a href='https://github.com/suntengfeisun/learn_git'>原文链接,转载请注明,谢谢.</a>
 #### 本教程为速成教程,如需要更深入的学习,请出门左拐
 在浏览教程之前我们先看一下git版本管理的流程示意"图"<br><br>
 本地文件--->暂存区--->本地版本库(某分支)--->远程版本库(某分支)<br><br>
@@ -76,6 +74,7 @@ Logo          : True
   git reset --hard HEAD^ //退回到上一个版本
 ```
 ## 学会了退回上一个版本,那么其他任意版本呢?
+答:
 ```java
   git reset --hard commit_id //退回到任意版本
 ```
